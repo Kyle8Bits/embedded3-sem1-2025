@@ -14,7 +14,7 @@ void uart_init()
     AUX_MU_MCR  = 0;	 //clear RTS (request to send)
     AUX_MU_IER  = 0;	 //disable interrupts
     AUX_MU_IIR  = 0xc6;  //enable and clear FIFOs
-    AUX_MU_BAUD = 542;   //configure 115200 baud rate [system_clk_freq/(baud_rate*8) - 1]
+    AUX_MU_BAUD = 542;   //configure 57600  baud rate [system_clk_freq/(baud_rate*8) - 1]
 
     /* Note: refer to page 11 of ARM Peripherals guide for baudrate configuration 
     (system_clk_freq is 250MHz by default) */
@@ -31,9 +31,9 @@ void uart_init()
 	GPPUD = 0;            //No pull up/down control
 	//Toogle clock to flush GPIO setup
 	r = 150; while(r--) { asm volatile("nop"); } //waiting 150 cycles
-	GPPUDCLK0 = (1 << 0)|(1 << 1); //enable clock for GPIO 32, 33
+	GPPUDCLK1 = (1 << 0)|(1 << 1); //enable clock for GPIO 32, 33
 	r = 150; while(r--) { asm volatile("nop"); } //waiting 150 cycles
-	GPPUDCLK0 = 0;        // flush GPIO setup
+	GPPUDCLK1 = 0;        // flush GPIO setup
 
 
     AUX_MU_CNTL = 3;      //enable transmitter and receiver (Tx, Rx)
