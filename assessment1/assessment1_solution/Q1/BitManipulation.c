@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-//Function to print out number in binary format
+// Function to print out number in binary format
 void printBinary(unsigned int num) {
     unsigned int mask = 1 << 31;  // start with the MSB bit
 
@@ -12,50 +12,21 @@ void printBinary(unsigned int num) {
     printf("\n");
 }
 
-
 int main() {
-    unsigned int X = 0b111000000;  // Initial value of X
-    unsigned int Y = 0;  // Initial value of Y
-    printf("   X = ") ; printBinary(X);
-    printf("   Y = ") ; printBinary(Y);
+    unsigned int X = 0b10101111001110000011101101010111;
+    unsigned int Y = 0;
+    
+    Y = X;
+    // Extract bits 7-4 and bits 13-10
+    unsigned int bits27_6 = (Y & (0x3FFFFF << 6)) >>6;  // >> 0;
 
-    // a. Set bit 3 of X
-    X |= (1 << 3);  
-    //printf("The binary equivalent is %d \n",  X);
-    printf("a) X = ") ; printBinary(X);
+    Y &= ~(0x3FFFFFF << 6);
 
-    // b. Set bits 5-3 of X
-    X |= (0b111 << 3);
-    printf("b) X = ") ; printBinary(X);
+    Y |= (bits27_6 << 10);
+    Y |= (0b1010 << 6);
 
-    // c. Clear bit 6 of X
-    X &= ~(1 << 6);
-    printf("c) X = ") ; printBinary(X);
-
-    // d. Clear bits 8-6 of X
-    X &= ~(0b111 << 6); 
-    printf("d) X = ") ; printBinary(X);
-
-    /* e. Both set bits 5-3 and clear bits 8-6 of X 
-    (should write to X only one time) */
-    unsigned int tmp = X;
-    tmp |= (0b111 << 3);  //set bits 5-3
-    tmp &= ~(0b111 << 6); //clear bits 8-6
-    X = tmp;
-    printf("e) X = ") ; printBinary(X);
-
-    // f. Toggle (reverse) bits 7 and 4 of X
-    X ^= ((1 << 7) | (1 << 4));  
-    printf("f) X = ") ; printBinary(X);
-
-    // g. Copy bits 7-4 of X to bits 11-8 of Y
-    tmp = (X >> 4) & 0b1111; //store only bits 7-4 of X to tmp
-    unsigned int tmpY;
-    tmpY = Y & ~(0b1111 << 8);  // Clear bits 11-8 of Y's value
-    tmpY |= tmp << 8;           // Update bits 11-8 by tmp value
-    Y = tmpY;                   // Write back to Y
-    printf("g) X = ") ; printBinary(X);
-    printf("   Y = ") ; printBinary(Y);
-
-    return 0;
+    printf("   X = ");
+    printBinary(X);
+    printf("   Y2 = ");
+    printBinary(Y);
 }
