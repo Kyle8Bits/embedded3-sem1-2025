@@ -16,12 +16,12 @@ all: clean kernel8.img run
 
 #UART0 = 1
 
-ifeq ($(UART), 0)
-    UARTTYPE = 0
-    UARTPORT = -serial stdio
+ifeq ($(UART), 0) 
+UARTTYPE = 0
+UARTPORT = -serial stdio
 else ifeq ($(UART), 1)
-    UARTTYPE = 1
-    UARTPORT = -serial null -serial stdio
+UARTTYPE = 1
+UARTPORT = -serial null -serial stdio
 endif
 
 ifeq ($(RPI), 3)
